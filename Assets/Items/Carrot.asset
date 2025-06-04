@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Carrot
   itemIcon: {fileID: -873735343, guid: b4d38a116945a084faf084e9bf2964cd, type: 3}
+  isStackable: 1
   healthRestored: 50

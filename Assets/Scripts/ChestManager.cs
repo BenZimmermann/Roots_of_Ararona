@@ -7,6 +7,8 @@ public class Chest : MonoBehaviour
     [SerializeField] private float interactionDistance = 2f;
     //public float interactionDistance = 0.5f;
     private Transform player;
+    private InventoryManager inventory;
+    public ItemClass AddItem1;
 
     public Sprite openSprite;
     public Sprite closedSprite;
@@ -24,9 +26,13 @@ public class Chest : MonoBehaviour
             player = playerObj.transform;
         else
             Debug.LogWarning("Spieler mit Tag 'Player' nicht gefunden.");
+        inventory = FindObjectOfType<InventoryManager>();
+        if (inventory == null)
+            Debug.LogWarning("InventoryManager nicht gefunden!");
+
     }
 
-    void Update()
+    public void Update()
     {
         //if (player == null || Mouse.current == null) return;
 
@@ -45,7 +51,19 @@ public class Chest : MonoBehaviour
                     Debug.Log("Chest geöffnet!");
                     isOpen = true;
                     spriteRenderer.sprite = openSprite;
+                    if (inventory != null && AddItem1 != null)
+                    {
+                        bool success = inventory.Add(AddItem1);
+                        if (success)
+                            Debug.Log("Item hinzugefügt: " + AddItem1.itemName);
+                        else
+                        {
+                            Debug.Log("Inventar voll oder Item nicht stapelbar: " + AddItem1.itemName);
+                        }
+                    }
+
                 }
+            }
                 else
                 {
                     Debug.Log("Zu weit weg von der Chest.");
@@ -53,4 +71,4 @@ public class Chest : MonoBehaviour
             }
         }
     }
-}
+
