@@ -15,9 +15,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Pause",
+                    "name": "Inventar",
                     "type": "Button",
                     "id": "32c392ec-4b7f-404d-b548-d51cf16adcad",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interaction",
+                    "type": "Button",
+                    "id": "c8a2d6a0-fc2f-447c-8224-693b583c76cc",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -138,11 +147,22 @@
                 {
                     "name": "",
                     "id": "56d02c7d-4c55-4132-841d-f7f9363d5ddf",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Inventar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c847efd8-afc2-4176-a28f-4dea1be04c8d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

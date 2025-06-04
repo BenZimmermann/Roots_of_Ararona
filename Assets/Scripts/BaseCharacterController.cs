@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -11,6 +12,7 @@ public class BaseCharacterController : MonoBehaviour
     [Range(0,1)][SerializeField] private float slowedFactor;
     private bool isSlowed;
     private bool isPlayerPaused;
+    private bool isTeleported;
     private Vector3Int currentPosition;
     private Vector3Int lastEncounterPosition;
     private CharacterAnimationManager cam;
@@ -34,6 +36,7 @@ public class BaseCharacterController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         //Setting first values
         isSlowed = false;
+        isTeleported = false;
         isPlayerPaused = false;
         cam = GetComponent<CharacterAnimationManager>();
         PausePlayer(false);
@@ -72,15 +75,26 @@ public class BaseCharacterController : MonoBehaviour
         {
             isSlowed = true;
         }
-        else if(col.gameObject.CompareTag("FightEncounter"))
+        else if (col.gameObject.CompareTag("FightEncounter"))
         {
-            if(currentPosition != lastEncounterPosition)
+            if (currentPosition != lastEncounterPosition)
             {
                 lastEncounterPosition = currentPosition;
                 // FightManager is a singleton that checks if the player is in an encounter, returning true or false for pausing player
-                PausePlayer(FightManager.Instance.CheckForEncounter(this)); 
+                PausePlayer(FightManager.Instance.CheckForEncounter(this));
             }
         }
+        if (col.gameObject.CompareTag("portal"))
+            {
+            isTeleported = true;
+            Debug.Log("Player is teleported to ChestRoom");
+            SceneManager.LoadScene("ChestRoom");
+            //if (isTeleported == true)
+            //{
+            //    SceneManager.LoadScene("ChestRoom");
+            //}
+        }
+
     }
     private void OnTriggerExit2D(Collider2D col)
     {

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: a977ecf5d01c3f7469e24dd16c14734a
+  - enabled: 1
+    path: Assets/Scenes/ChestRoom.unity
+    guid: a99b6698540bb1b40bb757dc6cfe36af
   m_configObjects: {}

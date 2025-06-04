@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Swamp
   - FightEncounter
+  - portal
+  - chest
   layers:
   - Default
   - TransparentFX
@@ -45,6 +47,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2279971337
+    locked: 0
+  - name: Chest
+    uniqueID: 1830449567
     locked: 0
   - name: Player
     uniqueID: 3486886425
