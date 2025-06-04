@@ -1,18 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolClass : MonoBehaviour
+[CreateAssetMenu(menuName = "Items/Tool", fileName = "New Tool Class")]
+public class ToolClass : ItemClass
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Tools")]
+    public ToolType tooltype;
+    public enum ToolType
     {
-        
+        Iron_Sword,
+        Stone_Sword,
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override ItemClass GetItem() { return this; }
+    public  override ToolClass GetTool() { return this; }
+    public override MaterialClass GetMaterial() { return null; }
+    public override FoodClass GetFood() { return null; }
 }

@@ -1,18 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MaterialClass : MonoBehaviour
+[CreateAssetMenu(menuName ="Items/Material", fileName = "New Material Class")]
+public class MaterialClass : ItemClass
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Material")]
+    public MaterialType materialtype;
+    public enum MaterialType
     {
-        
+        Stone,
+        Stick,
+        wood,
+        iron,
+        coal,
+        copper,
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override ItemClass GetItem() { return this; }
+    public override ToolClass GetTool() { return null; }
+    public override MaterialClass GetMaterial() { return this; }
+    public override FoodClass GetFood() { return null; }
 }

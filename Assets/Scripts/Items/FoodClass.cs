@@ -1,18 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
-public class foodClass : MonoBehaviour
+[CreateAssetMenu(menuName = "Items/Food", fileName = "New Food Class")]
+public class FoodClass : ItemClass
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Food")]
+    public float healthRestored;
+    public override ItemClass GetItem() { return this; }
+    public override ToolClass GetTool() { return null; }
+    public override MaterialClass GetMaterial() { return null; }
+    public override FoodClass GetFood() { return this; }
 }
