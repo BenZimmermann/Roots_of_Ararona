@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Iron_Sword
   m_EditorClassIdentifier: 
   itemName: Blade of Gween
-  itemIcon: {fileID: 1714415662, guid: b4d38a116945a084faf084e9bf2964cd, type: 3}
+  itemIcon: {fileID: -1928844328, guid: b0b690b44f52fad439a0792266a34a5c, type: 3}
   isStackable: 0
   tooltype: 0

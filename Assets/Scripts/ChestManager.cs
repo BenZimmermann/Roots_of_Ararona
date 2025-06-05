@@ -36,7 +36,7 @@ public class Chest : MonoBehaviour
     {
         //if (player == null || Mouse.current == null) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Collider2D hit = Physics2D.OverlapPoint(mousePos);

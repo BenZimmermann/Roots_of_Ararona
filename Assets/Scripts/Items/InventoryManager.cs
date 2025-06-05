@@ -35,29 +35,30 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            try
+            var image = slots[i].GetComponentsInChildren<Image>()[1];
+            var text = slots[i].GetComponentInChildren<TMP_Text>();
+
+            if (i < items.Count && items[i].HasItem())
             {
-                slots[i].transform.GetChild(0).GetComponent<Image>().enabled = true;
-                slots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i].GetItem().itemIcon;
+                image.enabled = true;
+                image.sprite = items[i].GetItem().itemIcon;
 
                 if (items[i].GetItem().isStackable)
-                    slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = items[i].GetQuantity() + "";
-              
+                    text.text = items[i].GetQuantity().ToString();
                 else
-                    slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
-
+                    text.text = "";
             }
-            catch
+            else
             {
-                slots[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
-                slots[i].transform.GetChild(0).GetComponent<Image>().enabled = false;
-                slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
-
+                image.enabled = false;
+                image.sprite = null;
+                text.text = "";
             }
         }
     }
     public bool Add(ItemClass item)
     {
+        if(item == null) return false;
      //   items.Add(item);
         SlotClass slot = Contains(item);
         if (slot != null && slot.GetItem().isStackable)
@@ -65,7 +66,7 @@ public class InventoryManager : MonoBehaviour
 
         else
         {
-            if (items.Count < slots.Length)
+            if (items.Count <= slots.Length)
                 items.Add(new SlotClass(item, 1));
             else
                 return false;
@@ -81,7 +82,7 @@ public class InventoryManager : MonoBehaviour
         SlotClass temp = Contains(item);
         if (temp != null)
         {
-            if (temp.GetQuantity() >= 1)
+            if (temp.GetQuantity() >= -1)
                 temp.AddQuantity(1);
             else
             {

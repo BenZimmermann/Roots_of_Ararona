@@ -6,9 +6,12 @@ using UnityEngine;
 public class FoodClass : ItemClass
 {
     [Header("Food")]
+    public bool consumable = true;
     public float healthRestored;
     public override ItemClass GetItem() { return this; }
     public override ToolClass GetTool() { return null; }
     public override MaterialClass GetMaterial() { return null; }
     public override FoodClass GetFood() { return this; }
+
+    public override ArmorClass GetArmor() { return null; }
 }

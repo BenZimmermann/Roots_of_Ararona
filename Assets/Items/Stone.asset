@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   itemName: Stone
-  itemIcon: {fileID: 1297758286, guid: b4d38a116945a084faf084e9bf2964cd, type: 3}
+  itemIcon: {fileID: 275378345, guid: b0b690b44f52fad439a0792266a34a5c, type: 3}
   isStackable: 1
   materialtype: 0

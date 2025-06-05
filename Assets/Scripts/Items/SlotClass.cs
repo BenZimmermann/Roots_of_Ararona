@@ -20,6 +20,10 @@ public class SlotClass
         this.item = _item;
         this.quantity = _quantity;
     }
+    public bool HasItem()
+    {
+        return item != null && quantity > 0;
+    }
 
     public ItemClass GetItem()
     {
