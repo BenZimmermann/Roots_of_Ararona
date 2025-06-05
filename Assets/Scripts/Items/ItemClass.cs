@@ -16,3 +16,4 @@ public abstract class ItemClass : ScriptableObject
     public abstract FoodClass GetFood();
     public abstract ArmorClass GetArmor();
 }
+

@@ -15,3 +15,4 @@ public class FoodClass : ItemClass
 
     public override ArmorClass GetArmor() { return null; }
 }
+

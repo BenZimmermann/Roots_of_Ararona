@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -64,11 +65,11 @@ public class ChestManager : MonoBehaviour
 
                 }
             }
-                else
-                {
-                    Debug.Log("Zu weit weg von der Chest.");
-                }
+            else
+            {
+                Debug.Log("Zu weit weg von der Chest.");
             }
         }
     }
+}
 
