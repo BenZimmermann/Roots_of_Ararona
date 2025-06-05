@@ -8,7 +8,8 @@ public abstract class ItemClass : ScriptableObject
     public Sprite itemIcon;
     public string itemDescription;
     public bool isEquippable = false;
-    public bool isStackable  = true; 
+    public bool isStackable  = true;
+    public bool isInInventory = false;
     public abstract ItemClass GetItem();
     public abstract ToolClass GetTool();
     public abstract MaterialClass GetMaterial();

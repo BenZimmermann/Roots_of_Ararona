@@ -4,40 +4,69 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private GameObject slotHolder;
+    [SerializeField] private GameObject slotHolder; //21
+    [SerializeField] private GameObject slotHand;   //2
+    [SerializeField] private GameObject slotArmor;  //67
     [SerializeField] private ItemClass itemToAdd;
     [SerializeField] private ItemClass itemToRemove;
 
-    public List<SlotClass> items = new List<SlotClass>();
+    public List<SlotClass> itemsInventory = new List<SlotClass>();   //1
+    public List<SlotClass> itemsHand = new List<SlotClass>();   //1
+    public List<SlotClass> itemsArmor = new List<SlotClass>();   //1
 
     
     private GameObject[] slots;
+    private GameObject[] handSlots;
+    private GameObject[] armorSlots;
 
 
     public void Start()
     {
+        //inv Slots
         slots = new GameObject[slotHolder.transform.childCount];
 
         for (int i = 0; i < slotHolder.transform.childCount; i++)
         {
                 slots[i] = slotHolder.transform.GetChild(i).gameObject;
          }
+        // Hand-Slots
+        handSlots = new GameObject[slotHand.transform.childCount];
+        for (int i = 0; i < slotHand.transform.childCount; i++)
+        {
+            handSlots[i] = slotHand.transform.GetChild(i).gameObject;
+        }
+
+        // Armor-Slots
+        armorSlots = new GameObject[slotArmor.transform.childCount];
+        for (int i = 0; i < slotArmor.transform.childCount; i++)
+        {
+            armorSlots[i] = slotArmor.transform.GetChild(i).gameObject;
+        }
+
         RefreshUI();
 
         Add(itemToAdd);
         Remove(itemToRemove);
     }
-
     public void RefreshUI()
     {
-        for (int i = 0; i < slots.Length; i++)
+        UpdateRefreshUI(slots, itemsInventory);
+        UpdateRefreshUI(handSlots, itemsHand);
+        UpdateRefreshUI(armorSlots, itemsArmor);
+    }
+    public void UpdateRefreshUI(GameObject[] SGroup, List<SlotClass> items)
+    {
+    
+        for (int i = 0; i < SGroup.Length; i++)
         {
-            var image = slots[i].GetComponentsInChildren<Image>()[1];
-            var text = slots[i].GetComponentInChildren<TMP_Text>();
-
+           // if (SGroup[i].ItemClass.isInInventory == false) return; // Check if the item is in the inventory before updating UI
+            var image = SGroup[i].GetComponentsInChildren<Image>()[1];
+            var text = SGroup[i].GetComponentInChildren<TMP_Text>();
+           // SGroup[i].isInInventory = true; // Ensure the slot is marked as in inventory
             if (i < items.Count && items[i].HasItem())
             {
                 image.enabled = true;
@@ -56,64 +85,189 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public bool Add(ItemClass item)
+    public bool Add(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
-        if(item == null) return false;
-     //   items.Add(item);
-        SlotClass slot = Contains(item);
-        if (slot != null && slot.GetItem().isStackable)
-            slot.AddQuantity(1);
+        if (item == null) return false;
 
-        else
+        SlotClass slot = Contains(item, itemSlotType);
+        switch (itemSlotType)
         {
-            if (items.Count <= slots.Length)
-                items.Add(new SlotClass(item, 1));
-            else
-                return false;
+            case ItemSlotType.Hands:
+                
+                if (slot != null && slot.GetItem().isStackable)
+                    slot.AddQuantity(1);
+
+                else
+                {
+                    if (itemsHand.Count <= slots.Length)
+                        itemsHand.Add(new SlotClass(item, 1));
+                    else
+                        return false;
+                }
+                break;
+            case ItemSlotType.Armor:
+               
+                if (slot != null && slot.GetItem().isStackable)
+                    slot.AddQuantity(1);
+
+                else
+                {
+                    if (itemsArmor.Count <= slots.Length)
+                        itemsArmor.Add(new SlotClass(item, 1));
+                    else
+                        return false;
+                }
+                break;
+            default:
+                
+                if (slot != null && slot.GetItem().isStackable)
+                    slot.AddQuantity(1);
+
+                else
+                {
+                    if (itemsInventory.Count <= slots.Length)
+                        itemsInventory.Add(new SlotClass(item, 1));
+                    else
+                        return false;
+                }
+                break;
         }
+        
+     //   items.Add(item);   
 
         RefreshUI();
         return true;
     }
 
-    public bool Remove(ItemClass item)
+    public bool Remove(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
-        //   items.Remove(item);
-        SlotClass temp = Contains(item);
-        if (temp != null)
+        SlotClass temp = Contains(item, itemSlotType);
+
+        switch (itemSlotType)
         {
-            if (temp.GetQuantity() >= -1)
-                temp.AddQuantity(1);
-            else
-            {
-                SlotClass slotToRemove = new SlotClass();
-                foreach (SlotClass slot in items)
+            case ItemSlotType.Hands:
+
+                if (temp != null)
+                {
+                    if (temp.GetQuantity() >= 1)
+                        temp.AddQuantity(-1);
+                    else
+                    {
+                        SlotClass slotToRemove = new SlotClass();
+                        foreach (SlotClass slot in itemsHand)
+                        {
+                            if (slot.GetItem() == item)
+                            {
+                                slotToRemove = slot;
+                                break;
+                            }
+                        }
+                        itemsHand.Remove(slotToRemove);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                break;
+            case ItemSlotType.Armor:
+                
+                if (temp != null)
+                {
+                    if (temp.GetQuantity() >= 1)
+                        temp.AddQuantity(-1);
+                    else
+                    {
+                        SlotClass slotToRemove = new SlotClass();
+                        foreach (SlotClass slot in itemsArmor)
+                        {
+                            if (slot.GetItem() == item)
+                            {
+                                slotToRemove = slot;
+                                break;
+                            }
+                        }
+                        itemsArmor.Remove(slotToRemove);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                break;
+            default:
+                if (temp != null)
+                {
+                    if (temp.GetQuantity() >= 1)
+                        temp.AddQuantity(-1);
+                    else
+                    {
+                        SlotClass slotToRemove = new SlotClass();
+                        foreach (SlotClass slot in itemsInventory)
+                        {
+                            if (slot.GetItem() == item)
+                            {
+                                slotToRemove = slot;
+                                break;
+                            }
+                        }
+                        itemsInventory.Remove(slotToRemove);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                break;
+        }
+
+        //   items.Remove(item);
+        
+        RefreshUI();
+        return true;
+    }
+    public SlotClass Contains(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
+    {
+        switch (itemSlotType)
+        {
+
+            case ItemSlotType.Hands:
+                foreach (SlotClass slot in itemsHand)
                 {
                     if (slot.GetItem() == item)
                     {
-                        slotToRemove = slot;
-                        break;
+                        return slot;
                     }
                 }
-                items.Remove(slotToRemove);
-            }
+                return null;
+            case ItemSlotType.Armor:
+                foreach (SlotClass slot in itemsArmor)
+                {
+                    if (slot.GetItem() == item)
+                    {
+                        return slot;
+                    }
+                }
+                return null;
+            default:
+
+                foreach (SlotClass slot in itemsInventory)
+                {
+                    if (slot.GetItem() == item)
+                    {
+                        return slot;
+                    }
+                }
+                return null;
         }
-        else
-        {
-            return false;
-        }
-        RefreshUI();
-        return true;
+
+
     }
-    public SlotClass Contains(ItemClass item)
-    {
-        foreach (SlotClass slot in items)
-        {
-            if (slot.GetItem() == item)
-            {
-                return slot;
-            }
-        }
-        return null;
-    }
+}
+
+public enum ItemSlotType
+{
+    Backpack,
+    Hands,
+    Armor
 }
