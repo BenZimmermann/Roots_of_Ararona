@@ -100,3 +100,13 @@ public class ChestInventoryManager : MonoBehaviour
 
     public List<SlotClass> GetItems() => chestItems; // Für Transfer zwischen Spielerinventar
 }
+
+
+//auf item klicken
+//item wird aus truhe gelöscht => sprite wird auf null gesetzt, trxt wird auf null gesetzt
+//item wird wie gehabt in inventar eingefügt
+//beides sollte auch umgekehrt funktionieren
+
+//spieler in der nähe && spieler drückt f => inventar und truhe öffnen
+//wenn der spieler mit f soll das inventar und die truhe wirder geschlossen werden
+//nun soll sich der spieler frei bewegen können

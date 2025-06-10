@@ -3,7 +3,7 @@ using UnityEngine;
 public class PauseMenueManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
-    //[SerializeField] private GameObject closeChest;
+   // [SerializeField] private GameObject closeChest;
     private BaseCharacterController baseCC;
 
     private void Start()

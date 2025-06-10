@@ -1,5 +1,4 @@
 
-using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,8 +8,8 @@ public class ChestManager : MonoBehaviour
 
 {
     //  [SerializeField] private GameObject chestCanvas;
-    // [SerializeField] private GameObject PlayerCanvas;
-    //private BaseCharacterController baseCC;
+    //  [SerializeField] private GameObject PlayerCanvas;
+    //  private BaseCharacterController baseCC;
     //Distance to player to interact with the chest
     [SerializeField] private float interactionDistance = 2f;
     //public float interactionDistance = 0.5f;
@@ -92,9 +91,9 @@ public class ChestManager : MonoBehaviour
     }
     //public void ToggleCanvas()
     //{
-    //    chestCanvas.SetActive(!chestCanvas.activeSelf);
-    //    PlayerCanvas.SetActive(!PlayerCanvas.activeSelf);
-    //    //baseCC.PausePlayer(chestCanvas.activeSelf);
+    //   chestCanvas.SetActive(!chestCanvas.activeSelf);
+    //   PlayerCanvas.SetActive(!PlayerCanvas.activeSelf);
+    //   baseCC.PausePlayer(chestCanvas.activeSelf);
     //}
 }
 
