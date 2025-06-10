@@ -3,6 +3,7 @@ using UnityEngine;
 public class PauseMenueManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
+    //[SerializeField] private GameObject closeChest;
     private BaseCharacterController baseCC;
 
     private void Start()
@@ -13,6 +14,7 @@ public class PauseMenueManager : MonoBehaviour
     public void TogglePauseMenu()
     {
         pauseMenuUI.SetActive(!pauseMenuUI.activeSelf);
+        //closeChest.SetActive(!pauseMenuUI.activeSelf);
         baseCC.PausePlayer(pauseMenuUI.activeSelf);
     }
 }

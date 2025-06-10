@@ -8,17 +8,20 @@ using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
+    // Inventory Slots for Inventpry, Hand, and Armor
     [SerializeField] private GameObject slotHolder; //21
     [SerializeField] private GameObject slotHand;   //2
-    [SerializeField] private GameObject slotArmor;  //67
+    [SerializeField] private GameObject slotArmor;  //4
+    // Items to add and remove for testing purposes
     [SerializeField] private ItemClass itemToAdd;
     [SerializeField] private ItemClass itemToRemove;
 
+    // Inventory Lists for different item types
     public List<SlotClass> itemsInventory = new List<SlotClass>();   //1
     public List<SlotClass> itemsHand = new List<SlotClass>();   //1
     public List<SlotClass> itemsArmor = new List<SlotClass>();   //1
 
-    
+    // Array to hold the slot GameObjects for Inventory, Hand, and Armor
     private GameObject[] slots;
     private GameObject[] handSlots;
     private GameObject[] armorSlots;
@@ -28,55 +31,64 @@ public class InventoryManager : MonoBehaviour
     {
         //inv Slots
         slots = new GameObject[slotHolder.transform.childCount];
-
+        // Populate the slots array with the child GameObjects of slotHolder
         for (int i = 0; i < slotHolder.transform.childCount; i++)
         {
                 slots[i] = slotHolder.transform.GetChild(i).gameObject;
          }
         // Hand-Slots
         handSlots = new GameObject[slotHand.transform.childCount];
+        // Populate the handSlots array with the child GameObjects of slotHand
         for (int i = 0; i < slotHand.transform.childCount; i++)
         {
             handSlots[i] = slotHand.transform.GetChild(i).gameObject;
         }
-
         // Armor-Slots
         armorSlots = new GameObject[slotArmor.transform.childCount];
+        // Populate the armorSlots array with the child GameObjects of slotArmor
         for (int i = 0; i < slotArmor.transform.childCount; i++)
         {
             armorSlots[i] = slotArmor.transform.GetChild(i).gameObject;
         }
 
+        // Initialize the UI
         RefreshUI();
 
+        // Add items for testing if there is one 
         Add(itemToAdd);
         Remove(itemToRemove);
     }
-    public void RefreshUI()
+    private void RefreshUI()
     {
+        // Update the UI for Inventory, Hand, and Armor slots
         UpdateRefreshUI(slots, itemsInventory);
         UpdateRefreshUI(handSlots, itemsHand);
         UpdateRefreshUI(armorSlots, itemsArmor);
     }
+
     public void UpdateRefreshUI(GameObject[] SGroup, List<SlotClass> items)
     {
-    
+        //Check if the SGroup is null or empty
         for (int i = 0; i < SGroup.Length; i++)
         {
-           // if (SGroup[i].ItemClass.isInInventory == false) return; // Check if the item is in the inventory before updating UI
+            //get the child Image and Text components of the slot GameObject
             var image = SGroup[i].GetComponentsInChildren<Image>()[1];
             var text = SGroup[i].GetComponentInChildren<TMP_Text>();
-           // SGroup[i].isInInventory = true; // Ensure the slot is marked as in inventory
+            // Check if the index is within the bounds of the items list
             if (i < items.Count && items[i].HasItem())
             {
+                // If the item exists, enable the image and set the sprite and text
                 image.enabled = true;
                 image.sprite = items[i].GetItem().itemIcon;
 
+                // Check if the item is stackable and set the text accordingly
                 if (items[i].GetItem().isStackable)
                     text.text = items[i].GetQuantity().ToString();
+                //if not stackable, set the text to empty
                 else
                     text.text = "";
             }
+            // If the index is out of bounds or the item does not exist, disable the image and clear the text
             else
             {
                 image.enabled = false;
@@ -87,13 +99,14 @@ public class InventoryManager : MonoBehaviour
     }
     public bool Add(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
+        //chek if an item is in the item slot
         if (item == null) return false;
-
+        // Check if the item is already in the inventory, hand, or armor slots
         SlotClass slot = Contains(item, itemSlotType);
         switch (itemSlotType)
         {
+            // Check the item slot type and add the item accordingly
             case ItemSlotType.Hands:
-                
                 if (slot != null && slot.GetItem().isStackable)
                     slot.AddQuantity(1);
 
@@ -105,6 +118,7 @@ public class InventoryManager : MonoBehaviour
                         return false;
                 }
                 break;
+            // Check the item slot type and add the item accordingly
             case ItemSlotType.Armor:
                
                 if (slot != null && slot.GetItem().isStackable)
@@ -118,6 +132,7 @@ public class InventoryManager : MonoBehaviour
                         return false;
                 }
                 break;
+            // Default case for Backpack items => the main inventory
             default:
                 
                 if (slot != null && slot.GetItem().isStackable)
@@ -145,14 +160,17 @@ public class InventoryManager : MonoBehaviour
 
         switch (itemSlotType)
         {
+            // Check the item slot type and remove the item accordingly
             case ItemSlotType.Hands:
 
                 if (temp != null)
                 {
+                    // If the item has a quantity greater than or equal to 1, reduce the quantity by 1
                     if (temp.GetQuantity() >= 1)
                         temp.AddQuantity(-1);
                     else
                     {
+                        // If the quantity is 0, find the slot in itemsHand that contains the item and remove it
                         SlotClass slotToRemove = new SlotClass();
                         foreach (SlotClass slot in itemsHand)
                         {
@@ -170,6 +188,7 @@ public class InventoryManager : MonoBehaviour
                     return false;
                 }
                 break;
+            // Check the item slot type and remove the item accordingly
             case ItemSlotType.Armor:
                 
                 if (temp != null)
@@ -195,6 +214,7 @@ public class InventoryManager : MonoBehaviour
                     return false;
                 }
                 break;
+            // Default case for Backpack items => the main inventory
             default:
                 if (temp != null)
                 {
@@ -230,16 +250,18 @@ public class InventoryManager : MonoBehaviour
     {
         switch (itemSlotType)
         {
-
+            // Check if the item exists and search for the item accordingly
             case ItemSlotType.Hands:
                 foreach (SlotClass slot in itemsHand)
                 {
+                    // Check if the item in the slot matches the item being searched for
                     if (slot.GetItem() == item)
                     {
                         return slot;
                     }
                 }
                 return null;
+            // Check if the item exists and search for the item accordingly
             case ItemSlotType.Armor:
                 foreach (SlotClass slot in itemsArmor)
                 {
@@ -250,7 +272,7 @@ public class InventoryManager : MonoBehaviour
                 }
                 return null;
             default:
-
+                // Check if the item exists and search for the item accordingly
                 foreach (SlotClass slot in itemsInventory)
                 {
                     if (slot.GetItem() == item)
@@ -265,6 +287,7 @@ public class InventoryManager : MonoBehaviour
     }
 }
 
+// enum to define the type of item slot
 public enum ItemSlotType
 {
     Backpack,
