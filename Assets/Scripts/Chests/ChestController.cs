@@ -8,6 +8,7 @@ public class ChestController : MonoBehaviour
     private bool isOpen = false;
     private bool isNear = false;
     //-----------------------------------
+    private BaseCharacterController baseCC;
     [SerializeField] private GameObject chestCanvas;
     [SerializeField] private GameObject PlayerCanvas;
 
@@ -20,8 +21,14 @@ public class ChestController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     //-----------------------------------
+
+    public bool IsOpen()
+    {
+        return isOpen;
+    }
     private void Start()
     {
+        baseCC = FindObjectOfType<BaseCharacterController>();
         spriteRenderer = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = closedSprite;
     }
@@ -71,6 +78,6 @@ public class ChestController : MonoBehaviour
     {
         chestCanvas.SetActive(!chestCanvas.activeSelf);
         PlayerCanvas.SetActive(!PlayerCanvas.activeSelf);
-       //baseCC.PausePlayer(chestCanvas.activeSelf);
+        baseCC.PausePlayer(chestCanvas.activeSelf);
     }
 }

@@ -8,7 +8,7 @@ public class ChestInventoryManager : MonoBehaviour
     [SerializeField] private GameObject slotHolder; // Container mit UI-Slots für die Truhe
 
     public List<SlotClass> chestItems = new List<SlotClass>(); // Inhalt der Truhe
-    private GameObject[] slots;
+    public GameObject[] slots;
 
     public void Start()
     {

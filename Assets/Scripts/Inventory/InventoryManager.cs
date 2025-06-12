@@ -22,7 +22,7 @@ public class InventoryManager : MonoBehaviour
     public List<SlotClass> itemsArmor = new List<SlotClass>();   //1
 
     // Array to hold the slot GameObjects for Inventory, Hand, and Armor
-    private GameObject[] slots;
+    public GameObject[] slots;
     private GameObject[] handSlots;
     private GameObject[] armorSlots;
 
