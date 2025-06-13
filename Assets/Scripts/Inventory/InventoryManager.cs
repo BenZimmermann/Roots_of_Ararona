@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+//using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -58,13 +58,22 @@ public class InventoryManager : MonoBehaviour
         Add(itemToAdd);
         Remove(itemToRemove);
     }
-    private void RefreshUI()
+
+    /// <summary>
+    /// Refreshes the UI by updating the Inventory, Hand, and Armor slots.
+    /// </summary>
+    public void RefreshUI()
     {
         // Update the UI for Inventory, Hand, and Armor slots
         UpdateRefreshUI(slots, itemsInventory);
         UpdateRefreshUI(handSlots, itemsHand);
         UpdateRefreshUI(armorSlots, itemsArmor);
+
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
 
     public void UpdateRefreshUI(GameObject[] SGroup, List<SlotClass> items)
     {
@@ -74,6 +83,7 @@ public class InventoryManager : MonoBehaviour
             //get the child Image and Text components of the slot GameObject
             var image = SGroup[i].GetComponentsInChildren<Image>()[1];
             var text = SGroup[i].GetComponentInChildren<TMP_Text>();
+
             // Check if the index is within the bounds of the items list
             if (i < items.Count && items[i].HasItem())
             {
@@ -97,6 +107,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Adds an item to the inventory, hand, or armor slots based on the specified item slot type.
+    /// </summary>
     public bool Add(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
         //chek if an item is in the item slot
@@ -154,6 +168,9 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Removes an item from the inventory, hand, or armor slots based on the specified item slot type.
+    /// </summary>
     public bool Remove(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
         SlotClass temp = Contains(item, itemSlotType);
@@ -246,6 +263,10 @@ public class InventoryManager : MonoBehaviour
         RefreshUI();
         return true;
     }
+
+    /// <summary>  
+    /// checks if an item exists in the inventory, hand, or armor slots based on the specified item slot type.
+    /// </summary>
     public SlotClass Contains(ItemClass item, ItemSlotType itemSlotType = ItemSlotType.Backpack)
     {
         switch (itemSlotType)

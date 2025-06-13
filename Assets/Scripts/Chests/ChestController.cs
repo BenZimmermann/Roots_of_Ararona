@@ -74,6 +74,10 @@ public class ChestController : MonoBehaviour
         isNear = false;
         Debug.Log("Player left chest area: " + collision.name);
     }
+
+    /// <summary>
+    /// 
+    
     public void ToggleCanvas()
     {
         chestCanvas.SetActive(!chestCanvas.activeSelf);

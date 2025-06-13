@@ -8,6 +8,7 @@ public class DragDropHandler : MonoBehaviour
     private TMP_Text childText;
 
     public ChestController chestController;
+    public InventoryManager inventoryManager; // Referenz zum InventoryManager, falls benötigt
     public Sprite newSprite;
 
     void Start()
@@ -15,6 +16,7 @@ public class DragDropHandler : MonoBehaviour
         // Finde das Child-Image und Child-Text Komponenten
         childImage = GetComponentInChildren<Image>();
         childText = GetComponentInChildren<TMP_Text>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
         if (chestController == null)
         {
             chestController = FindObjectOfType<ChestController>();
@@ -32,6 +34,7 @@ public class DragDropHandler : MonoBehaviour
         if (!chestController.IsOpen())
         {
             Debug.Log("Chest ist geschlossen - Aktion wird nicht ausgeführt");
+            inventoryManager.RefreshUI();
             return;
         }
         Debug.Log("Button wurde gedrückt");

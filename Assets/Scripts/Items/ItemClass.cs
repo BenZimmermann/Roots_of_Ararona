@@ -7,7 +7,7 @@ public abstract class ItemClass : ScriptableObject
     [Header("Item")]
     public string itemName;
     public Sprite itemIcon;
-    public string itemDescription;
+    [TextArea]public string itemDescription;
     public bool isEquippable = false;
     public bool isStackable  = true;
     public bool isInInventory = false;
