@@ -9,6 +9,9 @@ public class RewardEntry
 }
 public class CollectManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip Collect;
+    private AudioSource audioSource;
+
     public ChestInventoryManager chestInventoryManager; // Referenz zum ChestInventoryManager
     public InventoryManager inventoryManager; // Referenz zum InventoryManager
 
@@ -18,6 +21,7 @@ public class CollectManager : MonoBehaviour
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
         chestInventoryManager = FindObjectOfType<ChestInventoryManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void CollectAll()
@@ -33,6 +37,11 @@ public class CollectManager : MonoBehaviour
     {
         chestInventoryManager.chestItems.Clear();
         Rewards.Clear();
+    }
+    public void PlaySound()
+    {
+        audioSource.clip = Collect;
+        audioSource.Play();
     }
 
     public void Add()
@@ -61,7 +70,7 @@ public class CollectManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Keine Items in Rewards oder Inventar nicht verfügbar.");
+            Debug.Log("Keine Items in Rewards oder Inventar nicht verfügbar.");
         }
     }
 }

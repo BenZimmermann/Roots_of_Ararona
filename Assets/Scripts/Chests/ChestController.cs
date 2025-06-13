@@ -12,6 +12,9 @@ public class ChestController : MonoBehaviour
     [SerializeField] private GameObject chestCanvas;
     [SerializeField] private GameObject PlayerCanvas;
 
+    [SerializeField] private AudioClip ChestOpen;
+    private AudioSource audioSource;
+
     private InventoryManager inventory;
     public ItemClass AddItem1;
 
@@ -30,6 +33,7 @@ public class ChestController : MonoBehaviour
     {
         baseCC = FindObjectOfType<BaseCharacterController>();
         spriteRenderer = gameObject.transform.parent.GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         spriteRenderer.sprite = closedSprite;
     }
     private void Awake()
@@ -44,6 +48,8 @@ public class ChestController : MonoBehaviour
         // Logic to open the chest
         ToggleCanvas();
         Debug.Log("Chest opened!");
+        audioSource.clip = ChestOpen;
+        audioSource.Play();
         isOpen = !isOpen;
         spriteRenderer.sprite = openSprite;
         // Add the item to the inventory if it is not null
