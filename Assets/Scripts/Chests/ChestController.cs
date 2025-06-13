@@ -10,7 +10,7 @@ public class ChestController : MonoBehaviour
     //-----------------------------------
     private BaseCharacterController baseCC;
     [SerializeField] private GameObject chestCanvas;
-    [SerializeField] private GameObject PlayerCanvas;
+   /* [SerializeField]*/ private GameObject PlayerCanvas;
 
     [SerializeField] private AudioClip ChestOpen;
     private AudioSource audioSource;
@@ -23,6 +23,7 @@ public class ChestController : MonoBehaviour
     public Sprite closedSprite;
 
     private SpriteRenderer spriteRenderer;
+
     //-----------------------------------
 
     public bool IsOpen()
@@ -32,9 +33,23 @@ public class ChestController : MonoBehaviour
     private void Start()
     {
         baseCC = FindObjectOfType<BaseCharacterController>();
+        PlayerCanvas = GameObject.Find("InventoryPanel");
         spriteRenderer = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         spriteRenderer.sprite = closedSprite;
+        var allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (var obj in allObjects)
+        {
+            if (obj.name == "InventoryPanel")
+            {
+                PlayerCanvas = obj;
+                break;
+            }
+        }
+
+        if (PlayerCanvas == null)
+            Debug.LogError("InventoryPanel konnte nicht gefunden werden. Stelle sicher, dass der Name exakt stimmt und das Objekt nicht komplett entladen ist.");
+
     }
     private void Awake()
     {

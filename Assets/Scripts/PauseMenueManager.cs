@@ -7,6 +7,7 @@ public class PauseMenueManager : MonoBehaviour
     private BaseCharacterController baseCC;
     private AudioSource audioSource;
 
+
     private void Start()
     {
         baseCC = FindObjectOfType<BaseCharacterController>();

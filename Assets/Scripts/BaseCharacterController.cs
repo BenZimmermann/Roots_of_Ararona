@@ -21,6 +21,7 @@ public class BaseCharacterController : MonoBehaviour
     /// <summary>
     /// returns the first found Tilemap in the scene (!!make sure all Tilemaps have the same Transform!!)
     /// </summary>
+    /// 
     public Tilemap tilemap
     {
         get
@@ -31,6 +32,10 @@ public class BaseCharacterController : MonoBehaviour
     }
     private Tilemap m_tilemap;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -88,7 +93,7 @@ public class BaseCharacterController : MonoBehaviour
             {
             isTeleported = true;
             Debug.Log("Player is teleported to ChestRoom");
-            SceneManager.LoadScene("ChestRoom");
+            SceneManager.LoadScene("LootRoom");
             //if (isTeleported == true)
             //{
             //    SceneManager.LoadScene("ChestRoom");
