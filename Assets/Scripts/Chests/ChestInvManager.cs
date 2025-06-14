@@ -5,14 +5,19 @@ using UnityEngine.UI;
 
 public class ChestInventoryManager : MonoBehaviour
 {
-    [SerializeField] private GameObject slotHolder; // Container mit UI-Slots für die Truhe
+    //its similar to the inventory manager but for the chest, it manages the items in the chest and updates the UI accordingly.
+    [SerializeField] private GameObject slotHolder;
 
-    public List<SlotClass> chestItems = new List<SlotClass>(); // Inhalt der Truhe
+    public List<SlotClass> chestItems = new List<SlotClass>();
     public GameObject[] slots;
 
+
+    /// <summary>
+    /// initializes the chest inventory manager, finds all slots in the slot holder, and refreshes the UI.
+    /// </summary>
     public void Start()
     {
-        // Slots initialisieren
+        
         slots = new GameObject[slotHolder.transform.childCount];
 
         for (int i = 0; i < slots.Length; i++)
@@ -22,7 +27,9 @@ public class ChestInventoryManager : MonoBehaviour
 
         RefreshUI();
     }
-
+    /// <summary>
+    /// refreshes the UI of the chest inventory by updating each slot with the current items and their quantities. also adds the item icon and quantity text to the slots if they contain items.
+    /// </summary>
     public void RefreshUI()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -48,7 +55,9 @@ public class ChestInventoryManager : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// adds an item to the chest inventory. if the item already exists and is stackable, it increases the quantity. if there is space in the chest, it creates a new slot for the item.
+    /// </summary>
     public bool Add(ItemClass item)
     {
         if (item == null) return false;
@@ -69,6 +78,9 @@ public class ChestInventoryManager : MonoBehaviour
         RefreshUI();
         return true;
     }
+    /// <summary>
+    /// removes an item from the chest inventory. if the item exists and its quantity is greater than 1, it decreases the quantity by 1.
+    /// </summary>
 
     public bool Remove(ItemClass item)
     {
@@ -87,7 +99,9 @@ public class ChestInventoryManager : MonoBehaviour
 
         return false;
     }
-
+    /// <summary>
+    /// checks if the chest inventory contains a specific item. if it finds the item, it returns the corresponding slot; otherwise, it returns null.
+    /// </summary>
     public SlotClass Contains(ItemClass item)
     {
         foreach (SlotClass slot in chestItems)
@@ -98,15 +112,5 @@ public class ChestInventoryManager : MonoBehaviour
         return null;
     }
 
-    public List<SlotClass> GetItems() => chestItems; // Für Transfer zwischen Spielerinventar
+    public List<SlotClass> GetItems() => chestItems;
 }
-
-
-//auf item klicken
-//item wird aus truhe gelöscht => sprite wird auf null gesetzt, trxt wird auf null gesetzt
-//item wird wie gehabt in inventar eingefügt
-//beides sollte auch umgekehrt funktionieren
-
-//spieler in der nähe && spieler drückt f => inventar und truhe öffnen
-//wenn der spieler mit f soll das inventar und die truhe wirder geschlossen werden
-//nun soll sich der spieler frei bewegen können

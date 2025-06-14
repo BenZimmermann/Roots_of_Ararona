@@ -17,6 +17,7 @@ public class PauseMenueManager : MonoBehaviour
     public void TogglePauseMenu()
     {
         pauseMenuUI.SetActive(!pauseMenuUI.activeSelf);
+        // Play the inventory open sound when the pause menu is toggled
         audioSource.clip = InvOpen;
         audioSource.Play();
         baseCC.PausePlayer(pauseMenuUI.activeSelf);

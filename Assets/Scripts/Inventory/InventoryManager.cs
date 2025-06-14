@@ -72,7 +72,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    ///  adds the item to the specified slot group and updates the UI.
     /// </summary>
 
     public void UpdateRefreshUI(GameObject[] SGroup, List<SlotClass> items)

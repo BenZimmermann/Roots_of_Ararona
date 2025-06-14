@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Burger
   itemIcon: {fileID: 1568569266, guid: b0b690b44f52fad439a0792266a34a5c, type: 3}
-  itemDescription: "\t"
+  itemDescription: (Big) tasty!
   isEquippable: 0
   isStackable: 1
   isInInventory: 0
